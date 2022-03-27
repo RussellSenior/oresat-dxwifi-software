@@ -162,7 +162,7 @@ static dxwifi_rx_frame parse_rx_frame_fields(const struct pcap_pkthdr* pkt_stats
     frame.rtap_hdr  = (ieee80211_radiotap_hdr*) data;
     frame.mac_hdr   = (ieee80211_hdr*)(data + frame.rtap_hdr->it_len);
     frame.payload   = data + frame.rtap_hdr->it_len + sizeof(ieee80211_hdr);
-    frame.fcs       = data + pkt_stats->caplen - IEEE80211_FCS_SIZE;
+    frame.fcs       = data + pkt_stats->caplen; // - IEEE80211_FCS_SIZE;
     return frame;
 }
 
@@ -221,11 +221,13 @@ static dxwifi_control_frame_t check_frame_control(const uint8_t* frame, const st
     // Get info we need from the raw data frame
     const ieee80211_radiotap_hdr* rtap = (const ieee80211_radiotap_hdr*)frame;
     const uint8_t* payload = frame + rtap->it_len + sizeof(ieee80211_hdr);
-    size_t payload_size = pkt_stats->caplen - rtap->it_len - sizeof(ieee80211_hdr) - IEEE80211_FCS_SIZE;
+    size_t payload_size = pkt_stats->caplen - rtap->it_len - sizeof(ieee80211_hdr); // - IEEE80211_FCS_SIZE;
 
     unsigned eot                = 0;
     unsigned preamble           = 0;
     dxwifi_control_frame_t type = DXWIFI_CONTROL_FRAME_NONE;
+
+    printf("debug: caplen: %u ; it_len: %u ; hdr_size: %u ; fcs_size: %u ; data_frame_size: %u ; payload_size: %u\n",pkt_stats->caplen,rtap->it_len,sizeof(ieee80211_hdr),IEEE80211_FCS_SIZE,DXWIFI_TX_PAYLOAD_SIZE,payload_size);
 
     if(payload_size == DXWIFI_FRAME_CONTROL_SIZE) {
         type = DXWIFI_CONTROL_FRAME_UNKNOWN;
