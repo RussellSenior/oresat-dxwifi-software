@@ -59,7 +59,7 @@ static struct argp_option opts[] = {
     { "file-delay",     'f', "<mseconds>",          0,  "Length of time in milliseconds to delay between file transmissions",            PRIMARY_GROUP },
     { "redundancy",     'r', "<number>",            0,  "Number of extra control frames to send",                                        PRIMARY_GROUP },
     { "retransmit",     'R', "<number>",            0,  "Number of times to retransmit, -1 for infinity",                                PRIMARY_GROUP },
-    { "test",           'T',  0,                    0,  "Transmit a test sequence of bytes, use -c to retransmit it multiple times",     PRIMARY_GROUP },
+    { "test",           'T',  0,                    0,  "Transmit a test sequence of bytes, use -R to retransmit it multiple times",     PRIMARY_GROUP },
     { "daemon",         'D',  "<start|stop>",       0,  "Run the tx program as a forked daemon process (Sets logger to syslog as well)", PRIMARY_GROUP },
     { "pid-file",       'P',  "<file-path>",        0,  "Location of the Daemon's PID File",                                             PRIMARY_GROUP },
     { "packet-loss",    'p',  "<float>",            0,  "Numbers of packets dropped",                                                    PRIMARY_GROUP },
